@@ -1,6 +1,6 @@
 {
-  "installCommand": "npm ci --prefix pay-assist-poc",
-  "buildCommand": "npm run build --prefix pay-assist-poc",
+  "installCommand": "cd pay-assist-poc && npm ci",
+  "buildCommand": "cd pay-assist-poc && npm run build",
   "outputDirectory": "pay-assist-poc/dist",
   "framework": null
 }
