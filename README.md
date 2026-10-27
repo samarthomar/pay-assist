@@ -17,6 +17,6 @@ npm run dev
 
 ## Deploy
 
-Import this repository in Vercel. `vercel.json` already sets the build, so no extra settings are needed.
+Import this repository in Vercel and set **Root Directory** to `pay-assist-poc`. The build settings are in `pay-assist-poc/vercel.json`.
 
 See `DEMO_SCRIPT.md` for the presenter script.
