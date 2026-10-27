@@ -1,0 +1,31 @@
+/* ---------- Stage 5: Sustain ---------- */
+.ff { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; border-top: 3px solid var(--red); }
+.ff-now { font-size: 22px; font-weight: 700; color: var(--ink); }
+.ff-steps { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 0; padding: 0; }
+.ff-steps li { font-size: 12px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.ff-steps li.past { background: var(--red-tint); border-color: var(--red-soft); color: var(--red-deep); }
+.ff-steps li.on { background: var(--red); border-color: var(--red); color: var(--white); font-weight: 600; }
+.health { font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 999px; background: var(--red-tint); color: var(--red-deep); white-space: nowrap; }
+.health.at-risk { background: var(--red); color: var(--white); animation: pulse 1.6s infinite; }
+.health.rescued { background: var(--red-deep); color: var(--white); }
+.tl { display: grid; grid-template-columns: repeat(auto-fill, minmax(26px, 1fr)); gap: 4px 2px; padding-bottom: 14px; }
+.tl-pay { position: relative; display: flex; flex-direction: column; align-items: center; }
+.tl-dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--cream-2); background: var(--white); display: grid; place-items: center; font-size: 11px; font-weight: 700; color: var(--white); }
+.tl-pay.paid .tl-dot { background: var(--red); border-color: var(--red); }
+.tl-pay.failed .tl-dot { background: var(--white); border-color: var(--red); color: var(--red); }
+.tl-pay.moved .tl-dot { border-style: dashed; border-color: var(--red); color: var(--red); background: var(--red-tint); }
+.tl-date { position: absolute; top: 24px; white-space: nowrap; color: var(--muted); font-size: 10px; }
+.tl-pay:first-child .tl-date { left: 0; }
+.tl-pay:last-child .tl-date { right: 0; }
+.ph-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.ph-stats > div { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 12px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.compare > div { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.compare > div:first-child { border-color: var(--red); background: var(--red-tint); }
+.bubble-at { opacity: .6; margin-top: 4px; }
+.fline.sus { grid-template-columns: 96px 92px minmax(0, 1fr); }
+
+@media (max-width: 1100px) {
+  .ph-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .compare { grid-template-columns: 1fr; }
+}

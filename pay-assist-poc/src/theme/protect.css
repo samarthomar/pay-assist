@@ -1,0 +1,71 @@
+/* ---------- Stage 4: Protect (specialist workspace) ---------- */
+.mt4 { margin-top: 4px; }
+.protect-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr) 330px; gap: 16px; align-items: start; }
+.queue { position: sticky; top: 200px; max-height: calc(100vh - 220px); display: flex; flex-direction: column; }
+.qteams { display: flex; flex-wrap: wrap; gap: 4px; }
+.qteam { border: 1px solid var(--line); background: var(--white); border-radius: 999px; padding: 3px 9px; font-size: 12px; color: var(--ink-2); }
+.qteam span { color: var(--muted); margin-left: 2px; }
+.qteam.on { background: var(--red); border-color: var(--red); color: var(--white); }
+.qteam.on span { color: rgba(255,255,255,.8); }
+.qteam.live:not(.on) { border-color: var(--red); color: var(--red); font-weight: 600; }
+.qlist { overflow-y: auto; margin-top: 10px; display: flex; flex-direction: column; gap: 6px; min-height: 0; flex: 1; }
+.qitem { text-align: left; border: 1px solid var(--line); background: var(--white); border-radius: var(--radius); padding: 8px 10px; }
+.qitem:hover { border-color: var(--red-soft); }
+.qitem.on { border-color: var(--red); background: var(--red-tint); }
+.qitem.live { border-left: 4px solid var(--red); }
+
+.case h2 { font-size: 22px; }
+.case-amt { font-size: 26px; font-weight: 700; color: var(--red); }
+.why { background: var(--cream); border-radius: var(--radius); padding: 10px 12px; }
+.draft { border: 2px solid var(--red); border-radius: var(--radius); padding: 12px 14px; margin-top: 6px; }
+.draft.edited { border-style: dashed; }
+.draft-amt { font-size: 22px; font-weight: 700; color: var(--red); margin: 2px 0; }
+.gcheck.human { background: var(--cream); }
+.gcheck.human .gmark { color: var(--ink); }
+.btn.big { padding: 10px 22px; font-size: 15px; }
+.editor { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; }
+.editor .seg { margin: 0; }
+.plan-opts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.popt { display: flex; flex-direction: column; text-align: left; border: 1px solid var(--line); background: var(--white); border-radius: 8px; padding: 7px 10px; }
+.popt.on { border-color: var(--red); background: var(--red-tint); }
+.approved { border-radius: var(--radius); padding: 12px 14px; background: var(--red-tint); border: 1px solid var(--red-soft); }
+.done-tick.sm { width: 30px; height: 30px; font-size: 16px; margin: 0; flex-shrink: 0; }
+.sms-preview { background: var(--white); border: 1px solid var(--line); border-radius: 14px; border-bottom-left-radius: 4px; padding: 9px 12px; margin-top: 4px; max-width: 520px; }
+.never { border-left: 4px solid var(--red); background: var(--red-tint); border-radius: 0 var(--radius) var(--radius) 0; padding: 10px 12px; }
+.quote { font-style: italic; color: var(--red-deep); }
+.script { margin: 6px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+.notes { width: 100%; border: 1px solid var(--cream-2); border-radius: 8px; padding: 8px 10px; font: inherit; font-size: 13px; margin-top: 4px; resize: vertical; }
+.notes:focus { outline: 2px solid var(--red-soft); }
+.livechat { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; }
+.lc-head { border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.lc-body { max-height: 260px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding: 8px 0; }
+.lc-msg { max-width: 80%; padding: 6px 10px; border-radius: 10px; background: var(--cream); }
+.lc-msg.customer { align-self: flex-start; background: var(--white); border: 1px solid var(--line); }
+.lc-msg.human { align-self: flex-end; background: var(--red); color: var(--white); }
+.lc-msg.human .muted { color: rgba(255,255,255,.8); }
+.lc-msg.ai { align-self: flex-end; }
+.lc-msg.system { align-self: center; background: none; }
+.lc-sugg { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; margin-top: 4px; }
+.lc-sugg .qr { text-align: left; }
+
+.copilot { position: sticky; top: 200px; max-height: calc(100vh - 220px); overflow-y: auto; border-top: 3px solid var(--red); }
+.cp-head { color: var(--ink); margin: 6px 0 0; }
+.sugg { border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 10px; margin-top: 6px; }
+.watch { margin: 4px 0 0; padding-left: 18px; color: var(--ink-2); }
+.empty-case { grid-column: span 2; padding: 40px; text-align: center; }
+.bubble.human { border-color: var(--red-soft); }
+.handoff-banner { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--red); color: var(--white); margin-bottom: 16px; }
+
+@media (max-width: 1300px) {
+  .protect-grid { grid-template-columns: 280px minmax(0, 1fr); }
+  .copilot { grid-column: 2; position: static; max-height: none; }
+}
+@media (max-width: 900px) {
+  .protect-grid { grid-template-columns: 1fr; }
+  .queue, .copilot { position: static; max-height: none; grid-column: auto; }
+  .plan-opts { grid-template-columns: 1fr; }
+}
+
+.copilot .facts { grid-template-columns: 1fr; gap: 0; }
+.copilot .facts dt { margin-top: 6px; font-size: 12px; }
+.copilot .facts dd { font-weight: 600; }

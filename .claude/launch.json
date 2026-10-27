@@ -1,0 +1,7 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "pay-assist", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "pay-assist-poc", "run", "dev", "--", "--port", "5173", "--strictPort"], "port": 5173 },
+    { "name": "pay-assist-built", "runtimeExecutable": "npm", "runtimeArgs": ["--prefix", "pay-assist-poc", "run", "preview", "--", "--port", "4173", "--strictPort"], "port": 4173 }
+  ]
+}

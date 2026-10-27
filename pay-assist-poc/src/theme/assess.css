@@ -1,0 +1,91 @@
+/* ---------- Stage 1: Assess ---------- */
+.full { width: 100%; }
+.ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.r { text-align: right !important; }
+.assess-top { display: grid; grid-template-columns: minmax(300px, 400px) minmax(0, 1fr); gap: 16px; align-items: start; }
+.dropzone { text-align: center; border: 1.5px dashed var(--red-soft); box-shadow: none; padding: 26px 20px; transition: background .15s; }
+.dropzone.over { background: var(--red-tint); border-color: var(--red); }
+.dropzone p { margin: 4px auto 0; max-width: 300px; }
+.filecard { border-left: 3px solid var(--red); }
+
+.steps { list-style: none; margin: 10px 0 0; padding: 0; }
+.step { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 10px; padding: 8px 0; position: relative; }
+.step + .step::before { content: ""; position: absolute; left: 6px; top: -8px; height: 16px; width: 2px; background: var(--line); }
+.step .sdot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--cream-2); background: var(--white); margin-top: 3px; }
+.step.pending { color: var(--muted); }
+.step.pending b { color: var(--muted); font-weight: 600; }
+.step.working .sdot { border-color: var(--red); background: var(--red); animation: pulse 1.4s infinite; }
+.step.done .sdot { border-color: var(--red); background: var(--red-tint); }
+.step.done.veto .sdot { background: var(--red); }
+.stool { color: var(--ink-2); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; font-size: 11px; }
+.sres { margin-top: 3px; }
+.sbar { height: 4px; border-radius: 4px; background: var(--red-tint); margin-top: 6px; overflow: hidden; }
+.sbar span { display: block; height: 100%; background: var(--red); transition: width .06s linear; }
+
+.outcome h3 { font-size: 16px; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.kpi { border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; }
+.kpi.accent { border-color: var(--red-soft); background: var(--red-tint); }
+.kpi.accent .value { color: var(--red); }
+.split .sbar-track { display: flex; height: 14px; border-radius: 999px; overflow: hidden; background: var(--cream); }
+.split .sbar-track span { transition: width .8s ease; }
+.ai { --c: var(--red); }
+.human { --c: var(--red-deep); }
+.none { --c: var(--cream-2); }
+.split .sbar-track span, .legend i { background: var(--c); }
+.legend { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-2); }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.breakdowns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.bd-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto; gap: 8px; align-items: center; margin-top: 7px; }
+.bd-row .tiny:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bd-bar { height: 6px; background: var(--cream); border-radius: 6px; overflow: hidden; }
+.bd-bar span { display: block; height: 100%; background: var(--red-soft); border-radius: 6px; }
+.guardian-note { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: var(--radius); background: var(--red-tint); border: 1px solid var(--red-soft); }
+
+.filters { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.search { padding: 7px 10px; border: 1px solid var(--cream-2); border-radius: 8px; min-width: 220px; }
+.search:focus, select:focus { outline: 2px solid var(--red-soft); outline-offset: 0; }
+.table-wrap { overflow-x: auto; }
+table.decisions tbody tr { cursor: pointer; }
+table.decisions tbody tr:hover td { background: var(--cream); }
+table.decisions tbody tr:focus-visible { outline: 2px solid var(--red); }
+table.decisions td.reason { max-width: 320px; color: var(--ink-2); }
+.band { font-size: 12px; font-weight: 600; }
+.band.High { color: var(--red-deep); }
+.band.Medium { color: var(--ink-2); }
+.band.Low { color: var(--red); }
+.dec { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 6px; white-space: nowrap; }
+.dec.ai { background: var(--red); color: var(--white); }
+.dec.human { background: var(--red-tint); color: var(--red-deep); border: 1px solid var(--red-soft); }
+.dec.none { background: var(--cream); color: var(--muted); }
+
+/* customer drawer */
+.verdict { border-radius: var(--radius); padding: 12px 14px; border-left: 4px solid var(--c); background: var(--cream); }
+.dsec { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 8px; }
+.facts { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; font-size: 13px; }
+.facts dt { color: var(--muted); }
+.facts dd { margin: 0; }
+.rule { display: grid; grid-template-columns: 64px 1fr; gap: 8px; padding: 5px 0; border-bottom: 1px solid var(--line); }
+.gcheck { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: center; padding: 5px 4px; border-bottom: 1px solid var(--line); }
+.gcheck .gmark { font-weight: 700; color: var(--red); }
+.gcheck.fail { background: var(--red-tint); }
+.gcheck.fail .gmark { color: var(--red-deep); }
+
+/* agent console trace */
+.ctitle { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 8px; }
+.trace { background: var(--white); border-radius: var(--radius); border: 1px solid var(--line); }
+.tline { display: grid; grid-template-columns: 70px 110px minmax(0, 1.2fr) minmax(0, 1fr); gap: 10px; align-items: center; padding: 7px 12px; border-bottom: 1px solid var(--line); }
+.tline:last-child { border-bottom: 0; }
+.tline .mono { overflow: hidden; text-overflow: ellipsis; }
+.tline.block { background: var(--red-tint); }
+
+@media (max-width: 1100px) {
+  .assess-top { grid-template-columns: 1fr; }
+  .breakdowns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tline { grid-template-columns: 70px 1fr; }
+}
+@media (max-width: 760px) {
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  .breakdowns { grid-template-columns: 1fr; }
+  .search { min-width: 0; flex: 1; }
+}

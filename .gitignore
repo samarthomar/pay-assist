@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.vercel/
+.claude/settings.local.json
+# Word documents are kept out of this public repo
+*.docx
+~$*
