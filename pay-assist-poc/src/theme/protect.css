@@ -52,7 +52,7 @@
 .cp-head { color: var(--ink); margin: 6px 0 0; }
 .sugg { border: 1px solid var(--line); border-radius: var(--radius); padding: 8px 10px; margin-top: 6px; }
 .watch { margin: 4px 0 0; padding-left: 18px; color: var(--ink-2); }
-.empty-case { grid-column: span 2; padding: 40px; text-align: center; }
+.empty-case { grid-column: 2 / -1; padding: 40px; text-align: center; }
 .bubble.human { border-color: var(--red-soft); }
 .handoff-banner { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--red); color: var(--white); margin-bottom: 16px; }
 
@@ -62,7 +62,7 @@
 }
 @media (max-width: 900px) {
   .protect-grid { grid-template-columns: 1fr; }
-  .queue, .copilot { position: static; max-height: none; grid-column: auto; }
+  .queue, .copilot, .empty-case { position: static; max-height: none; grid-column: auto; }
   .plan-opts { grid-template-columns: 1fr; }
 }
 

@@ -41,7 +41,7 @@ export function JourneyScene({ mode }: { mode: 'engage' | 'resolve' }) {
           <div className="row">
             <button className="btn small" onClick={() => restart()}>Restart journey</button>
             {!s.verified && <button className="btn small ghost" onClick={skipToChat}>Skip to chat</button>}
-            {mode === 'resolve' && !s.ctx.ended && <button className="btn small ghost" onClick={discloseDistress} title="Scene 6">Customer discloses distress</button>}
+            {mode === 'resolve' && !s.ctx.ended && <button className="btn small ghost" onClick={discloseDistress} title="Simulates the customer saying something that signals distress">Customer discloses distress</button>}
           </div>
         </div>
         {s.ctx.handoff && <HandoffBanner />}

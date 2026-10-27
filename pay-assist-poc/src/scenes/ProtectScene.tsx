@@ -84,7 +84,7 @@ export function ProtectScene() {
       {current ? <CaseView key={current.id} k={current} /> : (
         <div className="card empty-case">
           <h3>Pick a case</h3>
-          <p className="small muted">Try <b>Priya Raman</b> ($2,640: approve an AI-drafted plan in one click), <b>Margaret Hughes</b> (life support: never messaged), or run Scene 6 for a live distress handover.</p>
+          <p className="small muted">Try <b>Priya Raman</b> ($2,640: approve an AI-drafted plan in one click), <b>Margaret Hughes</b> (life support: never messaged), or, for a live distress handover, go to <b>3 Resolve</b>, choose <b>Tom Becker</b> and press <b>Customer discloses distress</b>.</p>
         </div>
       )}
     </div>
