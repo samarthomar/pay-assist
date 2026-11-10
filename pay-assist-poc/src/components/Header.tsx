@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import logo from '../assets/techm-logo.png';
 import { DEMO_NOW, useApp } from '../state/store';
 import { resetAll } from '../state/scenes';
+import { hosted } from '../state/session';
 
 function ProductMark() {
   return (
@@ -18,9 +19,6 @@ function ProductMark() {
     </div>
   );
 }
-
-// The hosted demo sits behind a password (see middleware.ts); local and offline copies do not.
-const hosted = /^https?:$/.test(location.protocol) && !['localhost', '127.0.0.1'].includes(location.hostname);
 
 export function Header() {
   const audit = useApp((s) => s.audit);

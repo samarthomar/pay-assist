@@ -12,9 +12,12 @@ import './theme/console.css';
 import './theme/sustain.css';
 import './theme/results.css';
 import App from './App';
+import { checkVisit } from './state/session';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+if (checkVisit()) {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+}

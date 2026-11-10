@@ -7,7 +7,6 @@ import { next } from '@vercel/functions';
 export const config = { matcher: '/((?!favicon.ico).*)' };
 
 const COOKIE = 'pa_session';
-const WEEK = 60 * 60 * 24 * 7;
 
 async function tokenFor(password: string) {
   const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`pay-assist:${password}`));
@@ -38,12 +37,12 @@ export default async function middleware(req: Request) {
       const form = await req.formData();
       const tried = String(form.get('password') ?? '');
       if ((await tokenFor(tried)) === expected) {
-        return redirect(to, `${COOKIE}=${expected}; Path=/; Max-Age=${WEEK}; HttpOnly; Secure; SameSite=Lax`);
+        // Session cookie (no Max-Age): it ends when the browser closes. The app also asks again in every new tab (src/state/session.ts).
+        return redirect(`${to}#signed-in`, `${COOKIE}=${expected}; Path=/; HttpOnly; Secure; SameSite=Lax`);
       }
       await new Promise((r) => setTimeout(r, 700)); // slow down guessing
       return loginPage({ error: 'That password is not right. Please try again.', to }, 401);
     }
-    if (readCookie(req, COOKIE) === expected) return redirect(to);
     return loginPage({ to });
   }
 
