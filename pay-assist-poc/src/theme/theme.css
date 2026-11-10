@@ -45,6 +45,7 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -.01em; }
 .btn.primary:hover { background: #c9142f; }
 .btn.dark { background: var(--ink); color: var(--white); border-color: var(--ink); }
 .btn.ghost { background: transparent; border-color: transparent; color: var(--ink-2); }
+a.btn { text-decoration: none; display: inline-block; }
 .btn.small { padding: 5px 10px; font-size: 13px; }
 .btn[disabled] { opacity: .45; cursor: not-allowed; }
 .count { display: inline-block; min-width: 20px; padding: 0 6px; margin-left: 4px; border-radius: 999px; background: var(--ink); color: var(--white); font-size: 12px; text-align: center; }

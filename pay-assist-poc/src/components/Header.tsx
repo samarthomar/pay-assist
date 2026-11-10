@@ -19,6 +19,9 @@ function ProductMark() {
   );
 }
 
+// The hosted demo sits behind a password (see middleware.ts); local and offline copies do not.
+const hosted = /^https?:$/.test(location.protocol) && !['localhost', '127.0.0.1'].includes(location.hostname);
+
 export function Header() {
   const audit = useApp((s) => s.audit);
   const setAuditOpen = useApp((s) => s.setAuditOpen);
@@ -40,6 +43,7 @@ export function Header() {
       </button>
       <button className="btn primary" onClick={() => openRuleBook()}>Rule book</button>
       <button className="btn ghost" onClick={() => { reset(); resetAll(); }} title="Reset the demo">Reset</button>
+      {hosted && <a className="btn ghost" href="/logout" title="Sign out of the demo">Log out</a>}
     </header>
   );
 }
