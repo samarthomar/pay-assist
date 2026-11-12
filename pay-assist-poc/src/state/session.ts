@@ -1,5 +1,7 @@
-// The hosted demo sits behind a password (see middleware.ts); local and offline copies do not.
-export const hosted = /^https?:$/.test(location.protocol) && !['localhost', '127.0.0.1'].includes(location.hostname);
+// The Vercel deployment sits behind a password (see middleware.ts). Its build sets VITE_LOGIN=1 (vercel.json);
+// other builds (local, offline file, AWS or any static host) have no login.
+export const hosted = import.meta.env.VITE_LOGIN === '1'
+  && /^https?:$/.test(location.protocol) && !['localhost', '127.0.0.1'].includes(location.hostname);
 
 const KEY = 'pa_visit';
 const SIGNED_IN = '#signed-in';

@@ -6,3 +6,5 @@ dist/
 # Word documents are kept out of this public repo
 *.docx
 ~$*
+# Zips made for sharing
+*.zip
