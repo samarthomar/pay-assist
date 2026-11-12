@@ -15,9 +15,10 @@ import { checkReschedule, rescueOptions, schedule } from './sustain';
 import { PLAN_MIX, REC_MATRIX, ageing, belowTarget, funnel, overallScore } from './kpis';
 import { ALL_RULES } from './ruleBook';
 import { ESCALATIONS } from './escalation';
+import { DEMO_TODAY } from './clock';
 
-const TODAY = new Date(2026, 9, 14); // Wed 14 Oct 2026
-const FIRST = new Date(2026, 9, 15); // Thu 15 Oct 2026
+const TODAY = DEMO_TODAY; // Fri 13 Nov 2026
+const FIRST = new Date(2026, 10, 19); // Thu 19 Nov 2026, Sarah's next payday
 const sarah = persona('Sarah');
 
 describe("Sarah's numbers match the demo script", () => {
@@ -32,22 +33,22 @@ describe("Sarah's numbers match the demo script", () => {
     expect(p.lastInstalmentCents).toBe(23125);
   });
 
-  it('12-month Assist arrangement is $115.67 x 26, 15 Oct 2026 to 30 Sep 2027', () => {
+  it('12-month Assist arrangement is $115.67 x 26, 19 Nov 2026 to 4 Nov 2027', () => {
     const p = assistArrangement(sarah, FIRST, 'fortnightly', 12);
     expect(p.totalCents).toBe(300750);
     expect(p.count).toBe(26);
     expect(p.instalmentCents).toBe(11567);
     expect(p.instalmentCents! * 25 + p.lastInstalmentCents!).toBe(300750);
-    expect(p.firstDate).toBe('2026-10-15');
-    expect(p.lastDate).toBe('2027-09-30');
+    expect(p.firstDate).toBe('2026-11-19');
+    expect(p.lastDate).toBe('2027-11-04');
     expect(debtComponent(sarah, p)).toBe(3260); // ~$32.60 per fortnight towards the debt
   });
 
-  it('part pay is $200 today and $647.50 by 29 Oct', () => {
+  it('part pay is $200 today and $647.50 by 28 Nov', () => {
     const p = partPaymentExtension(sarah, TODAY);
     expect(p.upfrontCents).toBe(20000);
     expect(p.totalCents - p.upfrontCents!).toBe(64750);
-    expect(p.dueDate).toBe('2026-10-29');
+    expect(p.dueDate).toBe('2026-11-28');
   });
 
   it('a $120 fortnightly budget picks the 12-month plan (6 months is too high)', () => {
@@ -77,7 +78,7 @@ describe('Assessment decisions for the demo personas (BRD 6.2)', () => {
     const a = assess(persona('B'), TODAY);
     expect(a.decision).toBe('ai');
     expect(a.recommended?.type).toBe('extension');
-    expect(a.recommended?.dueDate).toBe('2026-10-28');
+    expect(a.recommended?.dueDate).toBe('2026-11-27');
     expect(a.reason).toContain('first overdue');
   });
 
@@ -114,7 +115,7 @@ describe('Assessment decisions for the demo personas (BRD 6.2)', () => {
 
 describe('Guardian', () => {
   it('blocks an extension longer than 21 days', () => {
-    const ext = { ...extension(sarah, TODAY, 14), dueDate: '2026-11-05' }; // 22 days
+    const ext = { ...extension(sarah, TODAY, 14), dueDate: '2026-12-05' }; // 22 days
     expect(checkPlan(sarah, ext, TODAY).allowed).toBe(false);
   });
 
@@ -194,9 +195,9 @@ describe('Morning run summary (Scene 1)', () => {
 });
 
 describe('Pay Assist chat understanding (Scene 2 and 3)', () => {
-  it("understands Sarah's sentence: fortnightly, from 15 October, $120", () => {
-    const b = parseBudget('Fortnightly, from 15th of October. Around $120 a fortnight is okay.', TODAY);
-    expect(b).toEqual({ freq: 'fortnightly', amountCents: 12000, firstDate: '2026-10-15', weekday: 4 });
+  it("understands Sarah's sentence: fortnightly, from 19 November, $120", () => {
+    const b = parseBudget('Fortnightly, from 19th of November. Around $120 a fortnight is okay.', TODAY);
+    expect(b).toEqual({ freq: 'fortnightly', amountCents: 12000, firstDate: '2026-11-19', weekday: 4 });
   });
 
   it('recognises intents and falls back safely', () => {
@@ -295,19 +296,19 @@ describe('Decision traces (Phase 5: every decision traceable to a rule)', () => 
 describe('Sustain: failed payment rescue (Scene 7)', () => {
   const plan = assistArrangement(sarah, FIRST, 'fortnightly', 12);
 
-  it('payment 2 is Thu 29 Oct; rescue offers Mon 2 Nov and Thu 5 Nov', () => {
-    expect(schedule(plan)[1]).toBe('2026-10-29');
-    expect(rescueOptions(plan, 1)).toEqual(['2026-11-02', '2026-11-05']);
+  it('payment 2 is Thu 3 Dec; rescue offers Mon 7 Dec and Thu 10 Dec', () => {
+    expect(schedule(plan)[1]).toBe('2026-12-03');
+    expect(rescueOptions(plan, 1)).toEqual(['2026-12-07', '2026-12-10']);
   });
 
   it('the Guardian allows a move within 7 days and before the next instalment, and blocks anything later', () => {
-    expect(checkReschedule(plan, 1, '2026-11-02').allowed).toBe(true);
-    expect(checkReschedule(plan, 1, '2026-11-06').allowed).toBe(false); // 8 days
-    expect(checkReschedule(plan, 1, '2026-10-29').allowed).toBe(false); // not later
+    expect(checkReschedule(plan, 1, '2026-12-07').allowed).toBe(true);
+    expect(checkReschedule(plan, 1, '2026-12-11').allowed).toBe(false); // 8 days
+    expect(checkReschedule(plan, 1, '2026-12-03').allowed).toBe(false); // not later
   });
 
   it('reminder and rescue texts reveal no amounts (BR-C01)', () => {
-    expect(checkMessage("Hi Sarah, your plan payment today didn't go through. Reply 1 to try again Mon 2 Nov.", false).allowed).toBe(true);
+    expect(checkMessage("Hi Sarah, your plan payment today didn't go through. Reply 1 to try again Mon 7 Dec.", false).allowed).toBe(true);
     expect(checkMessage('Your payment of $115.67 failed', false).allowed).toBe(false);
   });
 });

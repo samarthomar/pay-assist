@@ -2,6 +2,7 @@ import { totalOverdue } from '../../domain/customers';
 import { dollars } from '../../domain/money';
 import { PLAN_LABEL, decisionLabel } from '../../domain/morningRun';
 import { assess } from '../../domain/rules';
+import { format } from 'date-fns';
 import { DEMO_NOW } from '../../state/store';
 import { AGENTS } from '../../state/stages';
 import {
@@ -67,7 +68,7 @@ function EngagePlan() {
       </div>
       <div className="eplan mt12">
         <div><span className="tiny muted">Channel</span><b>SMS first, then email</b><span className="tiny muted">SMS has the higher open rate for reminders</span></div>
-        <div><span className="tiny muted">When</span><b>9:00 am Wednesday</b><span className="tiny muted">Inside permitted contact hours</span></div>
+        <div><span className="tiny muted">When</span><b>9:00 am {format(DEMO_NOW, 'EEEE')}</b><span className="tiny muted">Inside permitted contact hours</span></div>
         <div><span className="tiny muted">Message</span><b>Help-first, no balance</b><span className="tiny muted">Balance shown only after DOB + OTP</span></div>
         <div><span className="tiny muted">Login</span><b>Date of birth + one-time code</b><span className="tiny muted">3 attempts, then safe exit</span></div>
       </div>

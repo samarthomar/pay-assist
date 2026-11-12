@@ -41,7 +41,7 @@ export const RULE_GROUPS: RuleGroup[] = [
     title: 'Payment plans',
     intro: 'Every plan is built by the calculator and checked by the Guardian against these limits.',
     rules: [
-      { id: 'BR-P01', name: 'Extra time: 21 days at most', simple: 'An extension can give at most 21 extra days to pay.', example: 'Sarah\'s part-pay option: the rest is due 29 Oct, 15 days away.', where: 'Screen 3: option 2', source: 'AGL demo script' },
+      { id: 'BR-P01', name: 'Extra time: 21 days at most', simple: 'An extension can give at most 21 extra days to pay.', example: 'Sarah\'s part-pay option: the rest is due 28 Nov, 15 days away.', where: 'Screen 3: option 2', source: 'AGL demo script' },
       { id: 'BR-P02', name: 'Short plan: up to 3 months, equal payments', simple: 'Instalments run for up to 3 months. Every payment is the same; only the last may differ by a few cents.', example: 'Sarah: $231.25 every 2 weeks, 6 times.', where: 'Screen 3: option 3', source: 'AGL demo script' },
       { id: 'BR-P03', name: 'Long plan: 12 months (24 in Victoria)', simple: 'The Assist plan can run up to 12 months, or up to 24 months for customers in Victoria.', example: 'Sarah: 12 months at $115.67. Priya (Victoria) can have 24 months at $203.08.', where: 'Screen 3 slider. Screen 4 Copilot', source: 'AGL demo script' },
       { id: 'BR-P04', name: 'Bill smoothing: small debts only', simple: 'Paying the same amount every time is only offered if they owe less than $500 and have 12 months of bills.', example: 'Sarah owes $847.50, so no. Liam owes $310, so yes.', where: 'Screen 3: the note under the options', source: 'AGL demo script' },
@@ -54,7 +54,7 @@ export const RULE_GROUPS: RuleGroup[] = [
     title: 'After the plan starts',
     intro: 'Used by the Sustain agent to keep plans on track.',
     rules: [
-      { id: 'BR-S01', name: 'Rescue a missed payment', simple: 'A missed payment can move up to 7 days later, as long as it is before the next payment and the amount stays the same. AGL\'s script leaves this open, so this is our suggestion.', example: 'Sarah\'s 29 Oct payment fails and moves to Mon 2 Nov.', where: 'Screen 5', source: 'Proposed, to confirm with AGL' },
+      { id: 'BR-S01', name: 'Rescue a missed payment', simple: 'A missed payment can move up to 7 days later, as long as it is before the next payment and the amount stays the same. AGL\'s script leaves this open, so this is our suggestion.', example: 'Sarah\'s 3 Dec payment fails and moves to Mon 7 Dec.', where: 'Screen 5', source: 'Proposed, to confirm with AGL' },
     ],
   },
   {

@@ -7,6 +7,7 @@ import {
 import type { ContactDecision, PlanType } from '../domain/types';
 import { CustomerDrawer } from '../components/CustomerDrawer';
 import { receiveFile, runSteps, skipRun, startRun } from '../state/runner';
+import { DEMO_DAY } from '../domain/clock';
 import { DEMO_NOW, useApp } from '../state/store';
 import { AGENTS } from '../state/stages';
 
@@ -277,7 +278,7 @@ function DecisionTable({ rows }: { rows: Row[] }) {
     const blob = new Blob([toCsv(filtered)], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = filteredOn ? 'pay-assist_assessment_2026-10-14_filtered.csv' : 'pay-assist_assessment_2026-10-14.csv';
+    a.download = filteredOn ? `pay-assist_assessment_${DEMO_DAY}_filtered.csv` : `pay-assist_assessment_${DEMO_DAY}.csv`;
     a.click();
     URL.revokeObjectURL(a.href);
     log('human', 'Collections manager', `Downloaded the assessment output (${n(filtered.length)} rows)`);

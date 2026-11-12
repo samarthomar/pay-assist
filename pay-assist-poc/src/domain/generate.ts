@@ -1,4 +1,5 @@
 import { PERSONAS } from './customers';
+import { DEMO_DAY, OVERDUE_FILE } from './clock';
 import { seeded } from './money';
 import type { AuState, ContractAccount, Customer, FuelType } from './types';
 
@@ -27,6 +28,7 @@ export interface OverdueFile {
   records: FileRecord[];
 }
 
+// The seed is fixed so every demo run produces the same 12,457 accounts, whatever the demo date.
 export function generateOverdueFile(seed = 20261014): OverdueFile {
   const r = seeded(seed);
   const records: FileRecord[] = PERSONAS.map((customer) => ({ customer }));
@@ -110,7 +112,7 @@ export function generateOverdueFile(seed = 20261014): OverdueFile {
   plant('negative_balance', 4, 307);
   plant('duplicate_id', 4, 419);
 
-  return { name: 'AGL_overdue_residential_2026-10-14.csv', receivedAt: '2026-10-14T06:12:00', records };
+  return { name: OVERDUE_FILE, receivedAt: `${DEMO_DAY}T06:12:00`, records };
 }
 
 const ISSUE_TEXT: Record<IntakeIssue, string> = {

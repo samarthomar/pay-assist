@@ -1,6 +1,5 @@
-import { format } from 'date-fns';
 import logo from '../assets/techm-logo.png';
-import { DEMO_NOW, useApp } from '../state/store';
+import { useApp } from '../state/store';
 import { resetAll } from '../state/scenes';
 import { hosted } from '../state/session';
 
@@ -31,10 +30,6 @@ export function Header() {
       <div className="sep" />
       <ProductMark />
       <div className="spacer" />
-      <span className="clock num" title="Demo clock">
-        <span className="dot" />
-        {format(DEMO_NOW, 'EEE d MMM · HH:mm')}
-      </span>
       <span className="badge">Synthetic data</span>
       <button className="btn" onClick={() => setAuditOpen(true)}>
         Audit log<span className="count num">{audit.length}</span>

@@ -1,4 +1,5 @@
 import { morningRun, type MorningRun } from '../domain/morningRun';
+import { DEMO_DAY, OVERDUE_FILE } from '../domain/clock';
 import { DEMO_NOW, useApp } from './store';
 import type { AgentId } from './stages';
 
@@ -44,7 +45,7 @@ export function runSteps(r: MorningRun): RunStep[] {
       detail: `${n(r.channels['sms+email'])} SMS + email · ${n(r.channels.sms)} SMS only · ${n(r.channels.email)} email only`, ms: 1100, units: d.ai },
     { agent: 'handoff', title: 'Brief the human teams', tool: 'create_cases(queues=[Resolution, Specialist, Hardship, Review])', working: 'Preparing case cards',
       result: `${n(d.human)} case cards created`, detail: Object.entries(r.routes).map(([k, v]) => `${k} ${n(v)}`).join(' · '), ms: 1100, units: d.human },
-    { agent: 'orchestrator', title: 'Publish the output', tool: 'publish(output="assessment_2026-10-14.csv")', working: 'Publishing results',
+    { agent: 'orchestrator', title: 'Publish the output', tool: `publish(output="assessment_${DEMO_DAY}.csv")`, working: 'Publishing results',
       result: `Done: $${(r.overdueByDecision.ai / 1e8).toFixed(2)}m of overdue ready for AI self-service`, ms: 700, units: 0 },
   ];
 }
@@ -56,8 +57,8 @@ export function receiveFile(uploadedName?: string) {
   s.setRun({ status: 'ready', step: -1, progress: 0, uploadedName });
   s.setAgent('intake', 'idle', 'Daily overdue file received, waiting to run');
   s.log('system', 'File transfer', uploadedName
-    ? `File "${uploadedName}" chosen; the demo uses the synthetic file AGL_overdue_residential_2026-10-14.csv`
-    : 'AGL_overdue_residential_2026-10-14.csv received at 06:12 (12,457 rows)');
+    ? `File "${uploadedName}" chosen; the demo uses the synthetic file ${OVERDUE_FILE}`
+    : `${OVERDUE_FILE} received at 06:12 (12,457 rows)`);
 }
 
 export function startRun() {

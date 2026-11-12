@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { RuleCode } from '../components/RuleBook';
 import { format, parseISO } from 'date-fns';
+import { DEMO_TODAY } from '../domain/clock';
 import { dollars } from '../domain/money';
 import { schedule } from '../domain/sustain';
 import { useApp } from '../state/store';
@@ -84,7 +85,7 @@ export function SustainScene() {
             <div className="feed">
               {s.events.map((b) => (
                 <div key={b.id} className={`fline sus ${b.verdict ?? ''}`}>
-                  <span className="mono muted">{b.at.replace(' 2026,', '')}</span>
+                  <span className="mono muted">{b.at.replace(/ \d{4},/, '')}</span>
                   <span className="tag ai">{AGENTS.find((x) => x.id === b.agent)!.name}</span>
                   <div className="small">
                     {b.verdict && <span className={`tag ${b.verdict === 'block' ? 'solid' : ''}`}>{b.verdict === 'block' ? 'Stop' : 'Allow'}</span>} {b.text}
@@ -113,11 +114,11 @@ function SmsPhone() {
         <div className="ph-app">
           <div className="ph-bar"><span className="ph-back">‹</span><div><div className="strong small">AGL</div><div className="tiny muted">Text message</div></div></div>
           <div className="ph-body sms-body">
-            {s.sms.length === 0 && <div className="tiny muted" style={{ textAlign: 'center', marginTop: 40 }}>Sarah's plan started on 14 October.<br />Messages from the Sustain agent appear here.</div>}
+            {s.sms.length === 0 && <div className="tiny muted" style={{ textAlign: 'center', marginTop: 40 }}>Sarah's plan started on {format(DEMO_TODAY, 'd MMMM')}.<br />Messages from the Sustain agent appear here.</div>}
             {s.sms.map((m) => (
               <div key={m.id} className={`bubble ${m.from === 'me' ? 'me' : 'in'}`}>
                 {m.text}
-                <div className="tiny bubble-at">{m.at.replace(' 2026,', ' ·')}</div>
+                <div className="tiny bubble-at">{m.at.replace(/ \d{4},/, ' ·')}</div>
               </div>
             ))}
             {s.awaitingReply && (

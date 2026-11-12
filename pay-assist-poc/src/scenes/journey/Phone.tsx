@@ -298,7 +298,7 @@ function BudgetCard({ active }: { active: boolean }) {
   const ctx = useJourney((s) => s.ctx);
   const [freq, setFreq] = useState<Frequency>(ctx.freq ?? 'fortnightly');
   const [weekday, setWeekday] = useState(ctx.weekday ?? 4);
-  const dates = nextDates(new Date(2026, 9, 14), weekday);
+  const dates = nextDates(DEMO_NOW, weekday);
   const [first, setFirst] = useState(dates[0]);
   const [amount, setAmount] = useState(ctx.budgetCents ?? (freq === 'weekly' ? 6000 : freq === 'monthly' ? 26000 : 12000));
   const firstDate = dates.includes(first) ? first : dates[0];

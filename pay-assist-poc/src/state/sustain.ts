@@ -3,6 +3,8 @@ import { format, parseISO } from 'date-fns';
 import { persona } from '../domain/customers';
 import { checkMessage } from '../domain/guardian';
 import { dollars } from '../domain/money';
+import { DEMO_TODAY } from '../domain/clock';
+import { nextDates } from '../domain/conversation';
 import { assistArrangement } from '../domain/plans';
 import { checkReschedule, rescueOptions, schedule } from '../domain/sustain';
 import type { Plan } from '../domain/types';
@@ -29,7 +31,7 @@ interface SustainState {
 }
 
 const sarah = persona('Sarah');
-const FIRST = new Date(2026, 9, 15);
+const FIRST = parseISO(nextDates(DEMO_TODAY, 4)[0]); // Sarah's next Thursday payday
 
 // Sarah's plan: the one she accepted in the chat if it was an over-time plan, otherwise the scripted 12-month plan.
 export function sustainPlan(): Plan {
@@ -39,7 +41,7 @@ export function sustainPlan(): Plan {
 }
 
 const fresh = (): SustainState => ({
-  step: 0, now: 'Wed 14 Oct 2026, 9:15 am', status: schedule(sustainPlan()).map(() => 'scheduled'), sms: [], events: [], awaitingReply: false,
+  step: 0, now: `${format(DEMO_TODAY, 'EEE d MMM yyyy')}, 9:15 am`, status: schedule(sustainPlan()).map(() => 'scheduled'), sms: [], events: [], awaitingReply: false,
 });
 
 export const useSustain = create<SustainState>(() => fresh());
@@ -63,6 +65,7 @@ function sms(text: string) {
 
 const setStatus = (i: number, s: PayStatus) => set({ status: S().status.map((x, k) => (k === i ? s : x)) });
 const day = (d: string) => format(parseISO(d), 'EEE d MMM');
+const dayY = (d: string) => format(parseISO(d), 'EEE d MMM yyyy');
 
 export const STEP_LABELS = ['Plan starts', 'First payment', 'Payday reminder', 'Payment fails', 'Rescue agreed', 'Retry succeeds'];
 
@@ -79,7 +82,7 @@ export function fastForward() {
   const app = useApp.getState();
 
   if (step === 0) {
-    set({ step: 1, now: `${day(dates[0])} 2026, 9:00 am` });
+    set({ step: 1, now: `${dayY(dates[0])}, 9:00 am` });
     app.setAgent('sustain', 'working', 'Sustain: watching Sarah\'s plan');
     setStatus(0, 'paid');
     ev('sustain', `Payment 1 of ${dates.length} received: ${amt} by card ending 4821`, 'reconcile_payment()', 'allow');
@@ -87,13 +90,13 @@ export function fastForward() {
     return;
   }
   if (step === 1) {
-    set({ step: 2, now: `${format(parseISO(dates[1]).getTime() - 2 * 864e5, 'EEE d MMM')} 2026, 10:00 am` });
+    set({ step: 2, now: `${format(parseISO(dates[1]).getTime() - 2 * 864e5, 'EEE d MMM yyyy')}, 10:00 am` });
     ev('sustain', `Payday reminder: payment 2 due ${day(dates[1])}, 2 days away`, 'schedule_reminder()');
     sms(`Hi Sarah, a friendly reminder that your next plan payment is due this ${format(parseISO(dates[1]), 'EEEE d MMM')}. Reply CHANGE if you need a different date.`);
     return;
   }
   if (step === 2) {
-    set({ step: 3, now: `${day(dates[1])} 2026, 9:05 am` });
+    set({ step: 3, now: `${dayY(dates[1])}, 9:05 am` });
     setStatus(1, 'failed');
     app.setAgent('sustain', 'working', 'Sustain: payment 2 failed, preparing a rescue');
     ev('sustain', `Payment 2 failed at 9:00 am (insufficient funds). Detected within 5 minutes`, 'payment_webhook()', 'block');
@@ -106,7 +109,7 @@ export function fastForward() {
   }
   if (step === 4 && S().outcome === 'rescued') {
     const moved = S().movedTo!;
-    set({ step: 5, now: `${day(moved)} 2026, 9:00 am` });
+    set({ step: 5, now: `${dayY(moved)}, 9:00 am` });
     setStatus(1, 'paid');
     ev('sustain', `Payment 2 received on the new date: ${amt}. Plan back on track (2 of ${dates.length} paid)`, 'reconcile_payment()', 'allow');
     sms(`Thanks Sarah, payment received. Your plan is on track and your next payment is ${day(dates[2])}.`);

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { addDays, format, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { avgMonthlyBill, persona, totalOverdue } from '../domain/customers';
 import {
   POSTING, allowedAmounts, cadence, chatOptions, intent, longDate, nextDates, parseBudget, postingExtension, rankForBudget, WEEKDAYS,
@@ -97,7 +97,7 @@ const NAMES: Record<AgentId, string> = {
   plan: 'Plan', guardian: 'Guardian', handoff: 'Handoff', sustain: 'Sustain', insights: 'Insights',
 };
 
-export const phoneTime = () => format(addDays(new Date(2026, 9, 14, 9, clock), 0), 'H:mm');
+export const phoneTime = () => format(new Date(DEMO_NOW.getFullYear(), DEMO_NOW.getMonth(), DEMO_NOW.getDate(), 9, clock), 'H:mm');
 
 function behind(agent: AgentId, text: string, tool?: string, verdict?: Behind['verdict']) {
   const e: Behind = { id: nextId++, at: phoneTime(), agent, text, tool, verdict };
@@ -335,7 +335,8 @@ function probe(again = false) {
     ? `You mentioned you're paid ${known}. What day are you paid, roughly how much could you comfortably pay each ${known === 'fortnightly' ? 'fortnight' : known === 'weekly' ? 'week' : 'month'} including your usual energy use, and when would you like the first payment?`
     : 'How often are you paid, and on what day? Roughly how much could you comfortably pay each time, including your usual energy use? And when would you like your first payment?',
   { kind: 'slider' });
-  const sarahLine = 'Fortnightly, from 15th of October. Around $120 a fortnight is okay.';
+  // Sarah is paid on Thursdays: she asks to start on her next payday after the demo date.
+  const sarahLine = `Fortnightly, from ${format(parseISO(nextDates(DEMO_NOW, 4)[0]), "do 'of' MMMM")}. Around $120 a fortnight is okay.`;
   ask([
     ...(c.persona === 'Sarah' ? [{ label: sarahLine, go: () => { customerSays(sarahLine); budget(sarahLine); }, primary: true }] : []),
   ], 'e.g. "Fortnightly on Thursdays, about $120"');

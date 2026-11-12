@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import type { AgentId, StageId } from './stages';
+import { DEMO_NOW } from '../domain/clock';
 
-// Fixed demo clock: the morning run happens before the business day.
-export const DEMO_NOW = new Date(2026, 9, 14, 7, 30);
+export { DEMO_NOW };
 
 export type AuditKind = 'system' | 'agent' | 'guardian' | 'human' | 'customer';
 export type AgentStatus = 'idle' | 'working' | 'done';
